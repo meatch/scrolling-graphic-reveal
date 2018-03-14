@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Scrolling Graphic</title>
+        <style>
+            body { background-color: #333; margin: 0; }
+
+            .wrapper {
+                background-color: #eee;
+                width: 500px;
+                padding: 500px 25px;
+                margin: 50px auto;
+            }
+
+            /*-------------------------------------
+            | Scrolling Graphic CSS
+            -------------------------------------*/
+            .scrolling-graphic {
+                width: 200px;
+                height: 1142px;
+                border: solid 5px teal;
+                margin: 50px auto;
+
+                position: relative;
+            }
+            .scrolling-graphic img {
+                position: absolute;
+                left: 0px; top: 0px;
+
+                width: 100%;
+                height: auto;
+            }
+
+            .scrolling-graphic img.end {
+                clip: rect(0px,200px,0px,0px);
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Scrolling Graphic</h1>
+
+        <div class="wrapper">
+
+            <div class="scrolling-graphic">
+                <img class="start" src="./img/start.png">
+                <img class="end" src="./img/end.png">
+            </div>
+
+        </div>
+
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script>
+            /*-------------------------------------
+            | Scrolling Graphic JS
+            -------------------------------------*/
+            function scrolling_graphic() {
+                var maxHeight = 1142;
+                var graphicContainer = $('.scrolling-graphic');
+                var offset = 500;
+
+                $(window).scroll(function(){
+
+                    var sectHowFar = graphicContainer.offset().top;
+                    var scrollFromTop = $(window).scrollTop();
+
+                    var posTop =  Math.floor(scrollFromTop - sectHowFar) + offset;
+
+                    var clipString = 'rect(0px,200px,'+posTop+'px,0px)';
+
+                    graphicContainer.find('.end').css({'clip': clipString});
+
+                });
+            }
+
+            scrolling_graphic();
+        </script>
+    </body>
+</html>
